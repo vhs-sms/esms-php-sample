@@ -16,35 +16,26 @@
  $apiKey = "Your Api Key";
  $secretKey = 'Your Secret Key';
  $yourPhone = "0902435340";
- $oaId = "4097311281936189049";
- $tempId = "200607";
+ $smsType = "2";
+ $brandName = "eSMS.vn";
  $callbackUrl = "https://webhook.site/380d3088-5d03-4c6b-b188-3f6a82e479cd";
+ $content = "Ma xac nhan dang ky tai khoan eSMS.vn cua ban la 1214 Hotline ho tro: 0909090909";
 
  $curl = curl_init();
  
+ $requestUrl = $baseUrl.'/MainService.svc/json/SendMultipleMessage_V4_get?ApiKey='.urlencode($apiKey).'&SecretKey='.urlencode($secretKey).'&Phone='.$yourPhone.'&Brandname='.urlencode($brandName).'&SmsType='.$smsType.'&Content='.urlencode($content);
+
+//  print $requestUrl;
+
  curl_setopt_array($curl, array(
-  CURLOPT_URL => $baseUrl.'/MainService.svc/json/SendZaloMessage_V4_post_json/',
+  CURLOPT_URL => $requestUrl,
   CURLOPT_RETURNTRANSFER => true,
   CURLOPT_ENCODING => '',
   CURLOPT_MAXREDIRS => 10,
   CURLOPT_TIMEOUT => 0,
   CURLOPT_FOLLOWLOCATION => true,
   CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-  CURLOPT_CUSTOMREQUEST => 'POST',
-  CURLOPT_POSTFIELDS =>'{
-    "ApiKey": "'.$apiKey.'",
-    "SecretKey": "'.$secretKey.'",
-    "Phone": "'.$yourPhone.'",
-    "Params": [
-      "{{Params1}}","{{Params2}}","{{Params3}}"
-    ],
-    "TempID": "'.$tempId.'",
-    "OAID": "'.$oaId.'",
-    "CallbackUrl": "'.$callbackUrl.'"
-  }',
-  CURLOPT_HTTPHEADER => array(
-    'Content-Type: application/json'
-  ),
+  CURLOPT_CUSTOMREQUEST => 'GET',
 ));
 
 $response = curl_exec($curl);
